@@ -1,0 +1,68 @@
+{% extends 'layouts/dashboard_layout.html' %}
+{% load static %}
+
+{% block title %}Dashboard - {{ block.super }}{% endblock %}
+
+{% block content %}
+<div class="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
+    <!-- Customized Products Card -->
+    <div class="bg-white overflow-hidden shadow rounded-lg">
+        <div class="p-5">
+            <div class="flex items-center">
+                <div class="flex-shrink-0">
+                    <div class="bg-indigo-100 rounded-md p-3">
+                        <i class="fas fa-box text-indigo-600 text-xl"></i>
+                    </div>
+                </div>
+                <div class="ml-5">
+                    <h3 class="text-lg font-medium text-gray-900">Customized Products</h3>
+                    <div class="mt-1 text-3xl font-semibold text-indigo-600">{{ customized_products_count }}</div>
+                </div>
+            </div>
+        </div>
+        <div class="bg-gray-50 px-5 py-3">
+            <a href="{% url 'products:my_list' %}" class="text-sm text-indigo-600 hover:text-indigo-900">View all products →</a>
+        </div>
+    </div>
+
+    <!-- Active Orders Card -->
+    <div class="bg-white overflow-hidden shadow rounded-lg">
+        <div class="p-5">
+            <div class="flex items-center">
+                <div class="flex-shrink-0">
+                    <div class="bg-green-100 rounded-md p-3">
+                        <i class="fas fa-shopping-cart text-green-600 text-xl"></i>
+                    </div>
+                </div>
+                <div class="ml-5">
+                    <h3 class="text-lg font-medium text-gray-900">Active Orders</h3>
+                    <div class="mt-1 text-3xl font-semibold text-green-600">{{ active_orders_count }}</div>
+                </div>
+            </div>
+        </div>
+        <div class="bg-gray-50 px-5 py-3">
+            <a href="{% url 'orders:list' %}" class="text-sm text-green-600 hover:text-green-900">View all orders →</a>
+        </div>
+    </div>
+
+    <!-- Support Card -->
+    <div class="bg-white overflow-hidden shadow rounded-lg">
+        <div class="p-5">
+            <div class="flex items-center">
+                <div class="flex-shrink-0">
+                    <div class="bg-yellow-100 rounded-md p-3">
+                        <i class="fas fa-question-circle text-yellow-600 text-xl"></i>
+                    </div>
+                </div>
+                <div class="ml-5">
+                    <h3 class="text-lg font-medium text-gray-900">Need Help?</h3>
+                    <p class="mt-1 text-sm text-gray-500">Get support from our team</p>
+                </div>
+            </div>
+        </div>
+        <div class="bg-gray-50 px-5 py-3">
+            <a href="{% url 'support:home' %}" class="text-sm text-yellow-600 hover:text-yellow-900">Get support →</a>
+        </div>
+    </div>
+</div>
+{% endblock %}

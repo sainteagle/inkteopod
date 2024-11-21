@@ -1,0 +1,71 @@
+{% extends 'layouts/dashboard_layout.html' %}
+{% load static %}
+
+{% block title %}My Stores - {{ block.super }}{% endblock %}
+
+{% block content %}
+<div class="bg-white shadow overflow-hidden sm:rounded-lg">
+    <div class="px-4 py-5 sm:px-6 flex justify-between items-center">
+        <div>
+            <h2 class="text-lg leading-6 font-medium text-gray-900">
+                My Stores
+            </h2>
+            <p class="mt-1 max-w-2xl text-sm text-gray-500">
+                Manage your online stores
+            </p>
+        </div>
+        <a href="{% url 'stores:create' %}" 
+           class="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-indigo-600 hover:bg-indigo-700">
+            Create New Store
+        </a>
+    </div>
+    
+    <div class="bg-white shadow overflow-hidden sm:rounded-lg">
+        <ul class="divide-y divide-gray-200">
+            {% for store in stores %}
+            <li>
+                <div class="px-4 py-4 flex items-center sm:px-6">
+                    <div class="min-w-0 flex-1 sm:flex sm:items-center sm:justify-between">
+                        <div class="truncate">
+                            <div class="flex text-sm">
+                                <p class="font-medium text-indigo-600 truncate">{{ store.name }}</p>
+                            </div>
+                            <div class="mt-2 flex">
+                                <div class="flex items-center text-sm text-gray-500">
+                                    <i class="fas fa-clock flex-shrink-0 mr-1.5 h-5 w-5 text-gray-400"></i>
+                                    <p>Created on {{ store.created_at|date:"M d, Y" }}</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="mt-4 flex-shrink-0 sm:mt-0 sm:ml-5">
+                            <div class="flex space-x-4">
+                                <a href="{% url 'stores:detail' store.id %}" 
+                                   class="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-indigo-700 bg-indigo-100 hover:bg-indigo-200">
+                                    View Store
+                                </a>
+                                <a href="{% url 'stores:settings' store.id %}" 
+                                   class="inline-flex items-center px-3 py-2 border border-gray-300 shadow-sm text-sm leading-4 font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50">
+                                    Settings
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </li>
+            {% empty %}
+            <li class="px-4 py-5 sm:px-6">
+                <div class="text-center">
+                    <p class="text-sm text-gray-500">You haven't created any stores yet.</p>
+                    <div class="mt-4">
+                        <a href="{% url 'stores:create' %}" 
+                           class="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-indigo-600 hover:bg-indigo-700">
+                            Create Your First Store
+                        </a>
+                    </div>
+                </div>
+            </li>
+            {% endfor %}
+        </ul>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,71 @@
+{% extends 'base.html' %}
+
+{% block title %}Ürünlerim - {{ block.super }}{% endblock %}
+
+{% block content %}
+<div class="bg-white shadow rounded-lg">
+    <div class="px-4 py-5 sm:p-6">
+        <div class="flex justify-between items-center mb-6">
+            <h2 class="text-2xl font-bold text-gray-900">Ürünlerim</h2>
+            <a href="{% url 'products:create_product' %}" class="inline-flex items-center px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700">
+                <i class="fas fa-plus mr-2"></i>
+                Yeni Ürün
+            </a>
+        </div>
+
+        {% if messages %}
+        <div class="mb-4">
+            {% for message in messages %}
+            <div class="p-4 {% if message.tags == 'error' %}bg-red-100 text-red-700{% else %}bg-green-100 text-green-700{% endif %} rounded-lg">
+                {{ message }}
+            </div>
+            {% endfor %}
+        </div>
+        {% endif %}
+
+        {% if products %}
+        <div class="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
+            {% for product in products %}
+            <div class="bg-white border rounded-lg overflow-hidden shadow-sm hover:shadow-md transition-shadow duration-200">
+                <div class="aspect-w-16 aspect-h-9">
+                    {% if product.custom_image %}
+                    <img src="{{ product.custom_image.url }}" alt="{{ product.base_product.name }}" class="object-cover w-full h-48">
+                    {% else %}
+                    <div class="w-full h-48 bg-gray-200 flex items-center justify-center">
+                        <i class="fas fa-image text-gray-400 text-4xl"></i>
+                    </div>
+                    {% endif %}
+                </div>
+                <div class="p-4">
+                    <h3 class="text-lg font-semibold text-gray-900">{{ product.base_product.name }}</h3>
+                    <p class="text-sm text-gray-600 mt-1">{{ product.description|truncatechars:100 }}</p>
+                    <div class="mt-4 flex justify-between items-center">
+                        <span class="text-lg font-bold text-indigo-600">₺{{ product.base_product.price }}</span>
+                        <div class="space-x-2">
+                            <a href="{% url 'products:product_detail' product.id %}" class="text-indigo-600 hover:text-indigo-800">
+                                <i class="fas fa-eye"></i>
+                            </a>
+                            <a href="{% url 'products:edit_product' product.id %}" class="text-yellow-600 hover:text-yellow-800">
+                                <i class="fas fa-edit"></i>
+                            </a>
+                            <a href="{% url 'products:delete_product' product.id %}" class="text-red-600 hover:text-red-800">
+                                <i class="fas fa-trash"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+        {% else %}
+        <div class="text-center py-12">
+            <i class="fas fa-box text-gray-400 text-5xl mb-4"></i>
+            <p class="text-gray-500">Henüz hiç ürününüz yok.</p>
+            <a href="{% url 'products:create_product' %}" class="mt-4 inline-flex items-center px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700">
+                İlk ürününüzü oluşturun
+            </a>
+        </div>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}

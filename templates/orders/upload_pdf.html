@@ -1,0 +1,110 @@
+{% extends 'base.html' %}
+
+{% block title %}Upload PDF Order - InkteoPOD{% endblock %}
+
+{% block content %}
+<div class="space-y-6">
+    <!-- Page Header -->
+    <div class="flex justify-between items-center">
+        <h1 class="text-2xl font-semibold text-gray-900">Upload PDF Order</h1>
+    </div>
+
+    <!-- Upload Form -->
+    <div class="bg-white shadow rounded-lg p-6">
+        <form method="post" enctype="multipart/form-data" class="space-y-6">
+            {% csrf_token %}
+            
+            <!-- PDF Upload -->
+            <div>
+                <label class="block text-sm font-medium text-gray-700">Upload Etsy Packaging Slip PDF</label>
+                <div class="mt-1 flex justify-center px-6 pt-5 pb-6 border-2 border-gray-300 border-dashed rounded-md">
+                    <div class="space-y-1 text-center">
+                        <i class="fas fa-file-pdf text-4xl text-gray-400"></i>
+                        <div class="flex text-sm text-gray-600">
+                            <label for="file-upload" class="relative cursor-pointer bg-white rounded-md font-medium text-indigo-600 hover:text-indigo-500">
+                                <span>Upload a file</span>
+                                <input id="file-upload" name="pdf_file" type="file" class="sr-only" accept=".pdf">
+                            </label>
+                            <p class="pl-1">or drag and drop</p>
+                        </div>
+                        <p class="text-xs text-gray-500">PDF up to 10MB</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Submit Button -->
+            <div class="flex justify-end">
+                <button type="submit" 
+                        class="inline-flex items-center px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700">
+                    <i class="fas fa-upload mr-2"></i>
+                    Upload and Process
+                </button>
+            </div>
+        </form>
+    </div>
+
+    <!-- Instructions -->
+    <div class="bg-white shadow rounded-lg p-6">
+        <h2 class="text-lg font-medium text-gray-900 mb-4">Instructions</h2>
+        <div class="prose prose-sm text-gray-500">
+            <ol class="list-decimal list-inside space-y-2">
+                <li>Download the Packaging Slip PDF from your Etsy shop</li>
+                <li>Make sure the PDF contains all necessary order information</li>
+                <li>Upload the PDF using the form above</li>
+                <li>The system will automatically process the orders</li>
+                <li>Review the extracted orders before confirming</li>
+            </ol>
+        </div>
+    </div>
+</div>
+
+{% block extra_js %}
+<script>
+// Drag and drop functionality
+const dropZone = document.querySelector('form');
+const fileInput = document.getElementById('file-upload');
+
+['dragenter', 'dragover', 'dragleave', 'drop'].forEach(eventName => {
+    dropZone.addEventListener(eventName, preventDefaults, false);
+});
+
+function preventDefaults (e) {
+    e.preventDefault();
+    e.stopPropagation();
+}
+
+['dragenter', 'dragover'].forEach(eventName => {
+    dropZone.addEventListener(eventName, highlight, false);
+});
+
+['dragleave', 'drop'].forEach(eventName => {
+    dropZone.addEventListener(eventName, unhighlight, false);
+});
+
+function highlight(e) {
+    dropZone.classList.add('border-indigo-500');
+}
+
+function unhighlight(e) {
+    dropZone.classList.remove('border-indigo-500');
+}
+
+dropZone.addEventListener('drop', handleDrop, false);
+
+function handleDrop(e) {
+    const dt = e.dataTransfer;
+    const files = dt.files;
+    fileInput.files = files;
+}
+
+// File input change handler
+fileInput.addEventListener('change', function(e) {
+    const fileName = e.target.files[0]?.name;
+    if (fileName) {
+        const fileNameDisplay = document.querySelector('.text-xs.text-gray-500');
+        fileNameDisplay.textContent = `Selected file: ${fileName}`;
+    }
+});
+</script>
+{% endblock %}
+{% endblock %}

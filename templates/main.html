@@ -1,0 +1,69 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}InkteoPOD - Print on Demand Platform{% endblock %}
+
+{% block content %}
+<div class="min-h-screen bg-gradient-to-b from-blue-50 to-white">
+    <!-- Hero Section -->
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-20 pb-16">
+        <div class="text-center">
+            <img src="{% static 'images/inkteo-logo.jpeg' %}" alt="InkteoPOD" class="mx-auto h-32">
+            <h1 class="mt-6 text-4xl font-extrabold text-gray-900 sm:text-5xl sm:tracking-tight lg:text-6xl">
+                Print on Demand Platform
+            </h1>
+            <p class="max-w-xl mt-5 mx-auto text-xl text-gray-500">
+                Create your designs, customize products, and start selling in your online store.
+            </p>
+            <div class="mt-8 flex justify-center space-x-4">
+                <a href="{% url 'accounts:login' %}" class="inline-flex items-center px-6 py-3 border border-transparent text-base font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700">
+                    Sign In
+                </a>
+                <a href="{% url 'accounts:register' %}" class="inline-flex items-center px-6 py-3 border border-transparent text-base font-medium rounded-md text-indigo-600 bg-white hover:bg-gray-50 ring-2 ring-indigo-600">
+                    Sign Up
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Features Section -->
+    <div class="py-16 bg-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-3">
+                <!-- Feature 1 -->
+                <div class="relative p-6 bg-white border border-gray-100 rounded-lg shadow-sm">
+                    <div class="text-center">
+                        <i class="fas fa-paint-brush text-4xl text-indigo-600 mb-4"></i>
+                        <h3 class="text-lg font-medium text-gray-900">Upload Designs</h3>
+                        <p class="mt-2 text-base text-gray-500">
+                            Upload your designs and preview them on different products.
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Feature 2 -->
+                <div class="relative p-6 bg-white border border-gray-100 rounded-lg shadow-sm">
+                    <div class="text-center">
+                        <i class="fas fa-store text-4xl text-indigo-600 mb-4"></i>
+                        <h3 class="text-lg font-medium text-gray-900">Create Store</h3>
+                        <p class="mt-2 text-base text-gray-500">
+                            Set up your online store and start selling your products.
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Feature 3 -->
+                <div class="relative p-6 bg-white border border-gray-100 rounded-lg shadow-sm">
+                    <div class="text-center">
+                        <i class="fas fa-truck text-4xl text-indigo-600 mb-4"></i>
+                        <h3 class="text-lg font-medium text-gray-900">Automatic Delivery</h3>
+                        <p class="mt-2 text-base text-gray-500">
+                            Orders are automatically produced and delivered to your customers.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

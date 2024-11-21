@@ -1,0 +1,46 @@
+{% extends 'layouts/dashboard_layout.html' %}
+{% load static %}
+
+{% block title %}POD Products - {{ block.super }}{% endblock %}
+
+{% block content %}
+<div class="bg-white shadow overflow-hidden sm:rounded-lg">
+    <div class="px-4 py-5 sm:px-6">
+        <h2 class="text-lg leading-6 font-medium text-gray-900">
+            Print on Demand Products
+        </h2>
+        <p class="mt-1 max-w-2xl text-sm text-gray-500">
+            Choose a product to customize
+        </p>
+    </div>
+    
+    <div class="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3 p-4">
+        {% for product in products %}
+        <div class="relative rounded-lg border border-gray-300 bg-white px-6 py-5 shadow-sm hover:border-gray-400">
+            <div class="flex items-center space-x-3">
+                <div class="flex-shrink-0">
+                    <img class="h-24 w-24 object-cover" src="{{ product.image.url }}" alt="{{ product.name }}">
+                </div>
+                <div class="min-w-0 flex-1">
+                    <a href="{% url 'products:customize' product.id %}" class="focus:outline-none">
+                        <p class="text-sm font-medium text-gray-900">{{ product.name }}</p>
+                        <p class="text-sm text-gray-500 truncate">{{ product.description }}</p>
+                        <p class="mt-2 text-sm font-medium text-indigo-600">${{ product.price }}</p>
+                    </a>
+                </div>
+            </div>
+            <div class="mt-4">
+                <a href="{% url 'products:customize' product.id %}" 
+                   class="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+                    Customize
+                </a>
+            </div>
+        </div>
+        {% empty %}
+        <div class="text-center col-span-full py-12">
+            <p class="text-sm text-gray-500">No products available.</p>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,54 @@
+{% extends 'layouts/dashboard_layout.html' %}
+{% load static %}
+
+{% block title %}My Products - {{ block.super }}{% endblock %}
+
+{% block content %}
+<div class="bg-white shadow overflow-hidden sm:rounded-lg">
+    <div class="px-4 py-5 sm:px-6">
+        <h2 class="text-lg leading-6 font-medium text-gray-900">
+            My Customized Products
+        </h2>
+        <p class="mt-1 max-w-2xl text-sm text-gray-500">
+            View and manage your customized products
+        </p>
+    </div>
+    
+    <div class="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3 p-4">
+        {% for product in products %}
+        <div class="relative rounded-lg border border-gray-300 bg-white px-6 py-5 shadow-sm">
+            <div class="flex items-center space-x-3">
+                <div class="flex-shrink-0">
+                    <img class="h-24 w-24 object-cover" src="{{ product.custom_image.url }}" alt="{{ product.base_product.name }}">
+                </div>
+                <div class="min-w-0 flex-1">
+                    <div>
+                        <p class="text-sm font-medium text-gray-900">{{ product.base_product.name }}</p>
+                        <p class="text-sm text-gray-500 truncate">{{ product.description }}</p>
+                        <p class="mt-2 text-sm text-gray-500">Created: {{ product.created_at|date:"M d, Y" }}</p>
+                    </div>
+                </div>
+            </div>
+            <div class="mt-4 flex space-x-2">
+                <form method="POST" action="{% url 'products:delete' product.id %}" 
+                      onsubmit="return confirm('Are you sure you want to delete this product?');">
+                    {% csrf_token %}
+                    <button type="submit" 
+                            class="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-red-700 bg-red-100 hover:bg-red-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500">
+                        Delete
+                    </button>
+                </form>
+            </div>
+        </div>
+        {% empty %}
+        <div class="text-center col-span-full py-12">
+            <p class="text-sm text-gray-500">You haven't customized any products yet.</p>
+            <a href="{% url 'products:pod_list' %}" 
+               class="mt-4 inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-indigo-600 hover:bg-indigo-700">
+                Browse Products
+            </a>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}

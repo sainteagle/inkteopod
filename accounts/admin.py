@@ -1,21 +1,25 @@
 from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin
-from .models import CustomUser, UserRole
+from .models import CustomUser
 
+@admin.register(CustomUser)
 class CustomUserAdmin(UserAdmin):
-    list_display = ('username', 'email', 'role', 'email_verified', 'is_staff')
-    list_filter = ('role', 'email_verified', 'is_staff')
-    fieldsets = UserAdmin.fieldsets + (
-        ('Role Information', {'fields': ('role', 'email_verified')}),
-    )
-
-class UserRoleAdmin(admin.ModelAdmin):
-    list_display = ('name',)
+    list_display = ('email', 'username', 'is_staff', 'is_active', 'date_joined')
+    search_fields = ('email', 'username')
+    ordering = ('email',)
     
-    def get_form(self, request, obj=None, **kwargs):
-        form = super().get_form(request, obj, **kwargs)
-        form.base_fields['permissions'].widget = forms.JSONEditor()
-        return form
-
-admin.site.register(CustomUser, CustomUserAdmin)
-admin.site.register(UserRole, UserRoleAdmin)
+    # UserAdmin'den gelen fieldset'leri özelleştirelim
+    fieldsets = (
+        (None, {'fields': ('email', 'username', 'password')}),
+        ('Permissions', {'fields': ('is_active', 'is_staff', 'is_superuser',
+                                  'groups', 'user_permissions')}),
+        ('Important dates', {'fields': ('last_login', 'date_joined')}),
+    )
+    
+    # Kullanıcı oluşturma formunu özelleştirelim
+    add_fieldsets = (
+        (None, {
+            'classes': ('wide',),
+            'fields': ('email', 'username', 'password1', 'password2'),
+        }),
+    )

@@ -1,0 +1,89 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}InkteoPOD{% endblock %}</title>
+    <link href="https://unpkg.com/tailwindcss@^2/dist/tailwind.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
+    {% block extra_css %}{% endblock %}
+</head>
+<body class="bg-gray-100">
+    <!-- Top Bar -->
+    <div class="bg-blue-400 text-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-16 items-center">
+                <div class="flex-shrink-0">
+                    <img class="h-12" src="{% static 'images/inkteo-logo.jpeg' %}" alt="InkteoPOD">
+                </div>
+                <div class="flex items-center space-x-4">
+                    <a href="{% url 'accounts:settings' %}" class="hover:text-gray-200">Settings</a>
+                    <a href="{% url 'accounts:logout' %}" class="hover:text-gray-200">Logout</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="flex h-screen bg-gray-100">
+        <!-- Sidebar -->
+        <div class="w-64 bg-white shadow-md">
+            <nav class="mt-5 px-2">
+                <a href="{% url 'accounts:dashboard' %}" class="group flex items-center px-2 py-2 text-base font-medium rounded-md {% if active_menu == 'dashboard' %}bg-gray-100 text-gray-900{% else %}text-gray-600 hover:bg-gray-50 hover:text-gray-900{% endif %}">
+                    <i class="fas fa-home mr-3"></i>
+                    Dashboard
+                </a>
+                <a href="{% url 'products:pod_list' %}" class="mt-1 group flex items-center px-2 py-2 text-base font-medium rounded-md {% if active_menu == 'pod_products' %}bg-gray-100 text-gray-900{% else %}text-gray-600 hover:bg-gray-50 hover:text-gray-900{% endif %}">
+                    <i class="fas fa-tshirt mr-3"></i>
+                    PODProducts
+                </a>
+                <a href="{% url 'products:my_list' %}" class="mt-1 group flex items-center px-2 py-2 text-base font-medium rounded-md {% if active_menu == 'my_products' %}bg-gray-100 text-gray-900{% else %}text-gray-600 hover:bg-gray-50 hover:text-gray-900{% endif %}">
+                    <i class="fas fa-box mr-3"></i>
+                    My Products
+                </a>
+                <a href="{% url 'orders:list' %}" class="mt-1 group flex items-center px-2 py-2 text-base font-medium rounded-md {% if active_menu == 'orders' %}bg-gray-100 text-gray-900{% else %}text-gray-600 hover:bg-gray-50 hover:text-gray-900{% endif %}">
+                    <i class="fas fa-shopping-cart mr-3"></i>
+                    Orders
+                </a>
+                <a href="{% url 'orders:create' %}" class="mt-1 group flex items-center px-2 py-2 text-base font-medium rounded-md {% if active_menu == 'create_order' %}bg-gray-100 text-gray-900{% else %}text-gray-600 hover:bg-gray-50 hover:text-gray-900{% endif %}">
+                    <i class="fas fa-plus mr-3"></i>
+                    Create a New Order
+                </a>
+                <a href="{% url 'stores:list' %}" class="mt-1 group flex items-center px-2 py-2 text-base font-medium rounded-md {% if active_menu == 'stores' %}bg-gray-100 text-gray-900{% else %}text-gray-600 hover:bg-gray-50 hover:text-gray-900{% endif %}">
+                    <i class="fas fa-store mr-3"></i>
+                    My Stores
+                </a>
+                <a href="{% url 'modules:list' %}" class="mt-1 group flex items-center px-2 py-2 text-base font-medium rounded-md {% if active_menu == 'modules' %}bg-gray-100 text-gray-900{% else %}text-gray-600 hover:bg-gray-50 hover:text-gray-900{% endif %}">
+                    <i class="fas fa-puzzle-piece mr-3"></i>
+                    Modules
+                </a>
+                <a href="{% url 'modules:gangsheet' %}" class="mt-1 group flex items-center px-2 py-2 text-base font-medium rounded-md {% if active_menu == 'gangsheet' %}bg-gray-100 text-gray-900{% else %}text-gray-600 hover:bg-gray-50 hover:text-gray-900{% endif %}">
+                    <i class="fas fa-th mr-3"></i>
+                    GangSheet Builder
+                </a>
+                <a href="{% url 'payments:list' %}" class="mt-1 group flex items-center px-2 py-2 text-base font-medium rounded-md {% if active_menu == 'payments' %}bg-gray-100 text-gray-900{% else %}text-gray-600 hover:bg-gray-50 hover:text-gray-900{% endif %}">
+                    <i class="fas fa-credit-card mr-3"></i>
+                    Payments
+                </a>
+                <a href="{% url 'accounts:settings' %}" class="mt-1 group flex items-center px-2 py-2 text-base font-medium rounded-md {% if active_menu == 'settings' %}bg-gray-100 text-gray-900{% else %}text-gray-600 hover:bg-gray-50 hover:text-gray-900{% endif %}">
+                    <i class="fas fa-cog mr-3"></i>
+                    Settings
+                </a>
+                <a href="{% url 'support:home' %}" class="mt-1 group flex items-center px-2 py-2 text-base font-medium rounded-md {% if active_menu == 'support' %}bg-gray-100 text-gray-900{% else %}text-gray-600 hover:bg-gray-50 hover:text-gray-900{% endif %}">
+                    <i class="fas fa-question-circle mr-3"></i>
+                    Support
+                </a>
+            </nav>
+        </div>
+
+        <!-- Main Content -->
+        <div class="flex-1 overflow-auto">
+            <div class="py-6 px-4 sm:px-6 lg:px-8">
+                {% block content %}{% endblock %}
+            </div>
+        </div>
+    </div>
+
+    {% block extra_js %}{% endblock %}
+</body>
+</html>

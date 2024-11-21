@@ -1,19 +1,78 @@
 {% load user_tags %}
 
-<div class="space-y-2">
-    {% if request.user|has_permission:'dashboard' %}
-    <a href="{% url 'dashboard' %}" class="flex items-center px-4 py-2 text-gray-700 hover:bg-gray-100 rounded-lg {% if active_menu == 'dashboard' %}bg-gray-100{% endif %}">
-        <i class="fas fa-home w-5"></i>
-        <span class="ml-3">Dashboard</span>
-    </a>
-    {% endif %}
+<nav class="mt-5 px-2">
+    <div class="space-y-1">
+        <!-- Dashboard -->
+        <a href="{% url 'accounts:dashboard' %}" 
+           class="group flex items-center px-2 py-2 text-base font-medium rounded-md {% if active_menu == 'dashboard' %}bg-gray-100 text-gray-900{% else %}text-gray-600 hover:bg-gray-50 hover:text-gray-900{% endif %}">
+            <i class="fas fa-home mr-3 text-gray-400"></i>
+            Dashboard
+        </a>
 
-    {% if request.user|has_permission:'pod_products' %}
-    <a href="{% url 'pod_products' %}" class="flex items-center px-4 py-2 text-gray-700 hover:bg-gray-100 rounded-lg">
-        <i class="fas fa-box w-5"></i>
-        <span class="ml-3">POD Products</span>
-    </a>
-    {% endif %}
+        <!-- POD Products -->
+        <a href="{% url 'products:pod_products' %}"
+           class="group flex items-center px-2 py-2 text-base font-medium rounded-md {% if active_menu == 'pod_products' %}bg-gray-100 text-gray-900{% else %}text-gray-600 hover:bg-gray-50 hover:text-gray-900{% endif %}">
+            <i class="fas fa-box mr-3 text-gray-400"></i>
+            POD Products
+        </a>
 
-    <!-- Other menu items... -->
-</div>
+        <!-- My Products -->
+        <a href="{% url 'products:my_products' %}"
+           class="group flex items-center px-2 py-2 text-base font-medium rounded-md {% if active_menu == 'my_products' %}bg-gray-100 text-gray-900{% else %}text-gray-600 hover:bg-gray-50 hover:text-gray-900{% endif %}">
+            <i class="fas fa-star mr-3 text-gray-400"></i>
+            My Products
+        </a>
+
+        <!-- Orders -->
+        <div x-data="{ open: {% if active_menu == 'orders' %}true{% else %}false{% endif %} }">
+            <button @click="open = !open"
+                    class="group flex items-center px-2 py-2 text-base font-medium rounded-md w-full text-gray-600 hover:bg-gray-50 hover:text-gray-900">
+                <i class="fas fa-shopping-cart mr-3 text-gray-400"></i>
+                <span class="flex-1">Orders</span>
+                <i class="fas fa-chevron-down"></i>
+            </button>
+            <div x-show="open" class="ml-8 space-y-1">
+                <a href="{% url 'orders:order_list' %}"
+                   class="group flex items-center px-2 py-2 text-sm font-medium rounded-md text-gray-600 hover:bg-gray-50 hover:text-gray-900">
+                    Orders List
+                </a>
+                <a href="{% url 'orders:create_order' %}"
+                   class="group flex items-center px-2 py-2 text-sm font-medium rounded-md text-gray-600 hover:bg-gray-50 hover:text-gray-900">
+                    Create New Order
+                </a>
+                <a href="{% url 'orders:upload_pdf_order' %}"
+                   class="group flex items-center px-2 py-2 text-sm font-medium rounded-md text-gray-600 hover:bg-gray-50 hover:text-gray-900">
+                    Upload PDF Order
+                </a>
+            </div>
+        </div>
+
+        <!-- Modules -->
+        <div x-data="{ open: false }">
+            <button @click="open = !open"
+                    class="group flex items-center px-2 py-2 text-base font-medium rounded-md w-full text-gray-600 hover:bg-gray-50 hover:text-gray-900">
+                <i class="fas fa-puzzle-piece mr-3 text-gray-400"></i>
+                <span class="flex-1">Modules</span>
+                <i class="fas fa-chevron-down"></i>
+            </button>
+            <div x-show="open" class="ml-8 space-y-1">
+                <a href="#" class="group flex items-center px-2 py-2 text-sm font-medium rounded-md text-gray-600 hover:bg-gray-50 hover:text-gray-900">
+                    GangSheet Builder
+                </a>
+            </div>
+        </div>
+
+        <!-- Other menu items -->
+        <a href="{% url 'accounts:settings' %}"
+           class="group flex items-center px-2 py-2 text-base font-medium rounded-md {% if active_menu == 'settings' %}bg-gray-100 text-gray-900{% else %}text-gray-600 hover:bg-gray-50 hover:text-gray-900{% endif %}">
+            <i class="fas fa-cog mr-3 text-gray-400"></i>
+            Settings
+        </a>
+
+        <a href="{% url 'accounts:support' %}"
+           class="group flex items-center px-2 py-2 text-base font-medium rounded-md {% if active_menu == 'support' %}bg-gray-100 text-gray-900{% else %}text-gray-600 hover:bg-gray-50 hover:text-gray-900{% endif %}">
+            <i class="fas fa-question-circle mr-3 text-gray-400"></i>
+            Support
+        </a>
+    </div>
+</nav>

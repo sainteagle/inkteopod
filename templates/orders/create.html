@@ -1,0 +1,44 @@
+{% extends 'layouts/dashboard_layout.html' %}
+{% load static %}
+
+{% block title %}Create Order - {{ block.super }}{% endblock %}
+
+{% block content %}
+<div class="bg-white shadow overflow-hidden sm:rounded-lg">
+    <div class="px-4 py-5 sm:px-6">
+        <h2 class="text-lg leading-6 font-medium text-gray-900">
+            Create New Order
+        </h2>
+        <p class="mt-1 max-w-2xl text-sm text-gray-500">
+            Select your product and shipping details
+        </p>
+    </div>
+    
+    <div class="px-4 py-5 sm:p-6">
+        <form method="POST" class="space-y-6">
+            {% csrf_token %}
+            
+            <div class="space-y-4">
+                <h3 class="text-lg font-medium text-gray-900">Product Details</h3>
+                {{ item_form.as_p }}
+            </div>
+
+            <div class="space-y-4">
+                <h3 class="text-lg font-medium text-gray-900">Shipping Details</h3>
+                {{ order_form.as_p }}
+            </div>
+
+            <div class="flex justify-end space-x-3">
+                <a href="{% url 'orders:list' %}" 
+                   class="bg-white py-2 px-4 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 hover:bg-gray-50">
+                    Cancel
+                </a>
+                <button type="submit"
+                        class="inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700">
+                    Create Order
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock %}

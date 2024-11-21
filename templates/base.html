@@ -1,52 +1,16 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{% block title %}InkteoPOD Order Management System{% endblock %}</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <title>{% block title %}InkteoPOD{% endblock %}</title>
+    <link href="https://unpkg.com/tailwindcss@^2/dist/tailwind.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
+    {% block extra_css %}{% endblock %}
 </head>
-<body class="bg-gray-100">
-    <!-- Top Bar -->
-    <nav class="bg-white shadow-lg fixed w-full z-50">
-        <div class="max-w-full mx-auto px-4">
-            <div class="flex justify-between h-16">
-                <div class="flex items-center">
-                    <img src="{% static 'images/logo.png' %}" alt="InkteoPOD" class="h-8">
-                </div>
-                <div class="flex items-center">
-                    <div class="relative">
-                        <button class="flex items-center space-x-2 text-gray-700 hover:text-gray-900">
-                            <i class="fas fa-user-circle text-xl"></i>
-                            <span>{{ request.user.username }}</span>
-                            <i class="fas fa-chevron-down"></i>
-                        </button>
-                        <!-- User Dropdown -->
-                        <div class="absolute right-0 mt-2 w-48 bg-white rounded-md shadow-lg py-1 hidden">
-                            <a href="{% url 'settings' %}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Settings</a>
-                            <a href="{% url 'support' %}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Support</a>
-                            <a href="{% url 'logout' %}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Logout</a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </nav>
-
-    <!-- Main Content -->
-    <div class="flex pt-16">
-        <!-- Sidebar -->
-        <aside class="w-64 bg-white shadow-lg fixed h-full">
-            <nav class="mt-5 px-2">
-                {% include 'includes/sidebar.html' %}
-            </nav>
-        </aside>
-
-        <!-- Content -->
-        <main class="ml-64 flex-1 p-8">
-            {% block content %}{% endblock %}
-        </main>
-    </div>
+<body>
+    {% block content %}{% endblock %}
+    {% block extra_js %}{% endblock %}
 </body>
 </html>

@@ -21,4 +21,19 @@ from django.conf.urls.static import static
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('accounts/', include('accounts.urls')),
+    path('products/', include('products.urls')),
+    path('orders/', include('orders.urls')),
+    path('stores/', include('stores.urls')),
+    path('support/', include('support.urls')),
+    path('payments/', include('payments.urls')),
+    path('', include('pages.urls')),  # Ana sayfa ve diğer statik sayfalar için
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+
+if settings.DEBUG:
+    urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
+
+# Custom admin panel başlıkları
+admin.site.site_header = 'InkteoPOD Admin'
+admin.site.site_title = 'InkteoPOD Admin Portal'
+admin.site.index_title = 'Welcome to InkteoPOD Admin Portal'

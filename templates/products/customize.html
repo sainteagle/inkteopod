@@ -1,0 +1,78 @@
+{% extends 'layouts/dashboard_layout.html' %}
+{% load static %}
+
+{% block title %}Customize Product - {{ block.super }}{% endblock %}
+
+{% block content %}
+<div class="bg-white shadow overflow-hidden sm:rounded-lg">
+    <div class="px-4 py-5 sm:px-6">
+        <h2 class="text-lg leading-6 font-medium text-gray-900">
+            Customize {{ pod_product.name }}
+        </h2>
+        <p class="mt-1 max-w-2xl text-sm text-gray-500">
+            Upload your design and customize the product
+        </p>
+    </div>
+    
+    <div class="px-4 py-5 sm:p-6">
+        <div class="grid grid-cols-1 gap-6 lg:grid-cols-2">
+            <!-- Product Preview -->
+            <div>
+                <div class="aspect-w-1 aspect-h-1 bg-gray-200 rounded-lg overflow-hidden">
+                    <img src="{{ pod_product.image.url }}" alt="{{ pod_product.name }}" class="object-center object-cover">
+                </div>
+                <div class="mt-4">
+                    <h3 class="text-lg font-medium text-gray-900">{{ pod_product.name }}</h3>
+                    <p class="mt-1 text-sm text-gray-500">{{ pod_product.description }}</p>
+                    <p class="mt-2 text-lg font-medium text-indigo-600">${{ pod_product.price }}</p>
+                </div>
+            </div>
+
+            <!-- Customization Form -->
+            <div>
+                <form method="POST" enctype="multipart/form-data" class="space-y-6">
+                    {% csrf_token %}
+                    
+                    <div>
+                        <label for="{{ form.custom_image.id_for_label }}" class="block text-sm font-medium text-gray-700">
+                            Upload Your Design
+                        </label>
+                        <div class="mt-1">
+                            <input type="file" name="{{ form.custom_image.name }}" id="{{ form.custom_image.id_for_label }}"
+                                   accept="image/*" required
+                                   class="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
+                        </div>
+                        {% if form.custom_image.errors %}
+                        <p class="mt-2 text-sm text-red-600">{{ form.custom_image.errors.0 }}</p>
+                        {% endif %}
+                    </div>
+
+                    <div>
+                        <label for="{{ form.description.id_for_label }}" class="block text-sm font-medium text-gray-700">
+                            Description (Optional)
+                        </label>
+                        <div class="mt-1">
+                            <textarea name="{{ form.description.name }}" id="{{ form.description.id_for_label }}" rows="3"
+                                      class="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md"></textarea>
+                        </div>
+                        {% if form.description.errors %}
+                        <p class="mt-2 text-sm text-red-600">{{ form.description.errors.0 }}</p>
+                        {% endif %}
+                    </div>
+
+                    <div class="flex justify-end">
+                        <a href="{% url 'products:pod_list' %}" 
+                           class="bg-white py-2 px-4 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+                            Cancel
+                        </a>
+                        <button type="submit"
+                                class="ml-3 inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+                            Save Design
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
