@@ -1,0 +1,19 @@
+{% load user_tags %}
+
+<div class="space-y-2">
+    {% if request.user|has_permission:'dashboard' %}
+    <a href="{% url 'dashboard' %}" class="flex items-center px-4 py-2 text-gray-700 hover:bg-gray-100 rounded-lg {% if active_menu == 'dashboard' %}bg-gray-100{% endif %}">
+        <i class="fas fa-home w-5"></i>
+        <span class="ml-3">Dashboard</span>
+    </a>
+    {% endif %}
+
+    {% if request.user|has_permission:'pod_products' %}
+    <a href="{% url 'pod_products' %}" class="flex items-center px-4 py-2 text-gray-700 hover:bg-gray-100 rounded-lg">
+        <i class="fas fa-box w-5"></i>
+        <span class="ml-3">POD Products</span>
+    </a>
+    {% endif %}
+
+    <!-- Other menu items... -->
+</div>

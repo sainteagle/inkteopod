@@ -1,0 +1,23 @@
+server {
+    server_name panel.inkteo.com www.panel.inkteo.com;
+
+    location = /favicon.ico { access_log off; log_not_found off; }
+    
+    location /static/ {
+        root /var/www/inkteoPOD;
+    }
+
+    location /media/ {
+        root /var/www/inkteoPOD;
+    }
+
+    location / {
+        include proxy_params;
+        proxy_pass http://unix:/run/gunicorn.sock;
+    }
+
+    listen 80;
+}
+
+# Symbolic link oluştur
+ln -s /etc/nginx/sites-available/inkteoPOD /etc/nginx/sites-enabled 
